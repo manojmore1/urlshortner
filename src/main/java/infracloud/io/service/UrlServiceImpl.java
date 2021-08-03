@@ -42,13 +42,13 @@ public class UrlServiceImpl implements UrlService {
 		LOGGER.info("url-service: shortUrl is alrady generated");
 		String shortUrl = urlToTiny.get(url);
 		LOGGER.debug("url-service: existing shortUrl:{}", shortUrl);
-		return shortUrl;
+		return generateUrl(shortUrl);
 	}
 
 	@Override
 	public String serviceUrl(String url) {
 		String location = tinyToUrl.get(url);
-		System.out.println(location);
+		LOGGER.info("url-service: serving shortUrl:{}",url);
 		return location;
 	}
 	
