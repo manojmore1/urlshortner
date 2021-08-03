@@ -6,31 +6,45 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import infracloud.io.util.CommonUtil;
+
 @Service
-public class UrlServiceImpl implements UrlService{
+public class UrlServiceImpl implements UrlService {
+	public static final Logger LOGGER = LoggerFactory.getLogger(UrlServiceImpl.class);
+
 	Set<String> duplicateCheckSet = new HashSet<String>();
-	Map<String,String> tinyToUrl = new HashMap<String,String>();
-	Map<String,String> urlToTiny = new HashMap<String,String>();
-	
-	
+	Map<String, String> tinyToUrl = new HashMap<String, String>();
+	Map<String, String> urlToTiny = new HashMap<String, String>();
+
+	@Autowired
+	CommonUtil commonUtil;
+
+	@Value("${service.url}")
+	private String serviceUrl;
+
 	@Override
 	public String getShortenUrl(String url) {
-		if(duplicateCheckSet.add(url)) {
-			byte[] array = new byte[4]; // length is bounded by 7
-		    new Random().nextBytes(array);
-		    String generatedString = getRandomUrl();
-		    tinyToUrl.put(generatedString, url);
-		    urlToTiny.put(url, generatedString);
-		    System.out.println("shorten url:"+generatedString);
-		    return "http://localhost:8080/"+generatedString;
-		} else {
-			
+		if (duplicateCheckSet.add(url)) {
+			LOGGER.debug("url-service: started shortning of url");
+			String shortUrl = commonUtil.generateAlphaNumericTokenOfSize(4);
+			tinyToUrl.put(shortUrl, url);
+			urlToTiny.put(url, shortUrl);
+			LOGGER.debug("url-service: shortUrl generated:{}", shortUrl);
+			return generateUrl(shortUrl);
 		}
-		return url;
+		
+		LOGGER.info("url-service: shortUrl is alrady generated");
+		String shortUrl = urlToTiny.get(url);
+		LOGGER.debug("url-service: existing shortUrl:{}", shortUrl);
+		return shortUrl;
 	}
-	
+
 	@Override
 	public String serviceUrl(String url) {
 		String location = tinyToUrl.get(url);
@@ -38,17 +52,8 @@ public class UrlServiceImpl implements UrlService{
 		return location;
 	}
 	
-	public String getRandomUrl() {
-		int leftLimit = 48; // numeral '0'
-	    int rightLimit = 122; // letter 'z'
-	    int targetStringLength = 4;
-	    Random random = new Random();
-
-	    String generatedString = random.ints(leftLimit, rightLimit + 1)
-	      .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
-	      .limit(targetStringLength)
-	      .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
-	      .toString();
-	    return generatedString;
+	private String generateUrl(String shortUrl) {
+		return serviceUrl + "/" + shortUrl;
 	}
+
 }
