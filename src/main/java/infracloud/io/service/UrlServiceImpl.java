@@ -58,7 +58,7 @@ public class UrlServiceImpl implements UrlService {
 		return urlLocation.get();
 	}
 	
-	private String generateUrl(String shortUrl) {
+	protected String generateUrl(String shortUrl) {
 		return serviceUrl + "/" + shortUrl;
 	}
 
