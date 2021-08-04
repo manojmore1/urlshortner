@@ -49,9 +49,9 @@ public class UrlController {
 		LOGGER.info("url-service: short url invoked");
 		LOGGER.debug("url-service: short url invoked:{}", url);
 
-		String location = urlService.serviceUrl(url);
+		String urlLocation = urlService.locateUrl(url);
 		
-		httpServletResponse.setHeader("Location", location);
+		httpServletResponse.setHeader("Location", urlLocation);
 		httpServletResponse.setStatus(302);
 	}
 }

@@ -48,14 +48,14 @@ public class UrlServiceImpl implements UrlService {
 	}
 
 	@Override
-	public String serviceUrl(String url) {
-		Optional<String> location = Optional.ofNullable(shorturl_url.get(url));
-		LOGGER.info("url-service: serving shortUrl:{} with {}",url,location.get());
+	public String locateUrl(String url) {
+		Optional<String> urlLocation = Optional.ofNullable(shorturl_url.get(url));
+		LOGGER.info("url-service: serving shortUrl:{} with {}",url,urlLocation.get());
 		
-		if(!location.isPresent()) {
+		if(!urlLocation.isPresent()) {
 			throw new InvalidServiceUrlException("url-service: Invalid Service Url");
 		}
-		return location.get();
+		return urlLocation.get();
 	}
 	
 	private String generateUrl(String shortUrl) {

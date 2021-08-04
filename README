@@ -18,5 +18,6 @@ How to use API
    URL: http://localhost:8080/short-url
    Body Form parameter: 
    		url: <any valid URL witch needs to be shorten>
-3. Response will provide short URL, like "http://localhost:8080/xy2k"
-4. Copy this URL from response and paste in any browser, it should provide you the site. 
+3. Hit the endpoint (Postman: click on send button)
+4. Response will provide short URL, like "http://localhost:8080/xy2k"
+5. Copy this URL from response and paste in any browser, it should provide you the site. 
