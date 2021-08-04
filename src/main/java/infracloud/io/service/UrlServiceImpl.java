@@ -18,7 +18,7 @@ import infracloud.io.util.CommonUtil;
 
 @Service
 public class UrlServiceImpl implements UrlService {
-	public static final Logger LOGGER = LoggerFactory.getLogger(UrlServiceImpl.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(UrlServiceImpl.class);
 
 	private Set<String> duplicateCheckSet = new HashSet<String>();
 	private Map<String, String> shorturl_url = new HashMap<String, String>();
