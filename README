@@ -1,0 +1,22 @@
+Docker image execution steps:
+
+1. download docker image attachment "url-service.tar" from email
+2. run docker load command,
+   $docker load -i <D:\Work\url-service.tar>
+3. check if image is loaded successfully, using below command
+   $docker images
+4. if "url-service.tar" image is available, then use below command to run the image in container
+   $docker run -p 8080:8080 url-service
+5. follow "How to use API" steps 
+
+=======================
+How to use API
+
+1. Please use postman or any other RestAPI testing tool
+2. Configure endpoint with below configuration,
+   Http Method: POST
+   URL: http://localhost:8080/short-url
+   Body Form parameter: 
+   		url: <any valid URL witch needs to be shorten>
+3. Response will provide short URL, like "http://localhost:8080/xy2k"
+4. Copy this URL from response and paste in any browser, it should provide you the site. 
