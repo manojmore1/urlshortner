@@ -28,7 +28,7 @@ public class UrlController {
 	@Autowired
 	CommonUtil commonUtil;
 	
-	public static final Logger LOGGER = LoggerFactory.getLogger(UrlController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(UrlController.class);
 	private static final String EMPTY_NULL_URL_MSG = "Please provide URL";
 
 	@PostMapping(value = "/short-url")
