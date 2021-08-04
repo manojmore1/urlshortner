@@ -20,12 +20,12 @@ import infracloud.io.util.CommonUtil;
 public class UrlServiceImpl implements UrlService {
 	public static final Logger LOGGER = LoggerFactory.getLogger(UrlServiceImpl.class);
 
-	Set<String> duplicateCheckSet = new HashSet<String>();
-	Map<String, String> shorturl_url = new HashMap<String, String>();
-	Map<String, String> url_shorturl = new HashMap<String, String>();
+	private Set<String> duplicateCheckSet = new HashSet<String>();
+	private Map<String, String> shorturl_url = new HashMap<String, String>();
+	private Map<String, String> url_shorturl = new HashMap<String, String>();
 
 	@Autowired
-	CommonUtil commonUtil;
+	private CommonUtil commonUtil;
 
 	@Value("${service.url}")
 	private String serviceUrl;
