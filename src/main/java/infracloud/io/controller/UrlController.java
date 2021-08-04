@@ -1,13 +1,10 @@
 package infracloud.io.controller;
 
 
-import java.util.regex.Matcher;
-
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,16 +22,17 @@ import infracloud.io.util.CommonUtil;
 @RestController
 @Validated
 public class UrlController {
-	public static final Logger LOGGER = LoggerFactory.getLogger(UrlController.class);
-	
 	@Autowired
 	UrlService urlService;
 	
 	@Autowired
 	CommonUtil commonUtil;
+	
+	public static final Logger LOGGER = LoggerFactory.getLogger(UrlController.class);
+	private static final String EMPTY_NULL_URL_MSG = "Please provide URL";
 
-	@PostMapping(value = "/shortner")
-	public String createShortUrl(@Valid @RequestParam @NotNull @NotBlank String url) {
+	@PostMapping(value = "/short-url")
+	public String createShortUrl(@Valid @RequestParam @NotNull(message = EMPTY_NULL_URL_MSG) @NotBlank(message = EMPTY_NULL_URL_MSG) String url) {
 		commonUtil.isValidUrl(url);
 				 
 		LOGGER.info("url-service: shortning of url");
@@ -43,7 +41,7 @@ public class UrlController {
 		return urlService.getShortenUrl(url);
 	}
 
-	@GetMapping("/{url}")
+	@GetMapping(value = "/{url}")
 	public void serviceUrl(@PathVariable("url") String url, HttpServletResponse httpServletResponse) {
 		LOGGER.info("url-service: short url invoked");
 		LOGGER.debug("url-service: short url invoked:{}", url);
@@ -53,13 +51,4 @@ public class UrlController {
 		httpServletResponse.setHeader("Location", location);
 		httpServletResponse.setStatus(302);
 	}
-	
-	/*
-	 * public static void main(String arsg[]) { java.util.regex.Pattern p =
-	 * java.util.regex.Pattern.compile(
-	 * "(http://|https://|www.)([a-zA-Z0-9]+).[a-zA-Z0-9]*.[a-z]{3}.?([a-z]+)?");
-	 * Matcher m;
-	 * m=p.matcher("https://www.datacamp.com/community/tutorials/git-push-pull");
-	 * System.out.println(m.find()); }
-	 */
 }

@@ -3,6 +3,7 @@ package infracloud.io.service;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import infracloud.io.exception.exceptions.InvalidServiceUrlException;
 import infracloud.io.util.CommonUtil;
 
 @Service
@@ -47,9 +49,13 @@ public class UrlServiceImpl implements UrlService {
 
 	@Override
 	public String serviceUrl(String url) {
-		String location = tinyToUrl.get(url);
-		LOGGER.info("url-service: serving shortUrl:{}",url);
-		return location;
+		Optional<String> location = Optional.ofNullable(tinyToUrl.get(url));
+		LOGGER.info("url-service: serving shortUrl:{} with {}",url,location.get());
+		
+		if(!location.isPresent()) {
+			throw new InvalidServiceUrlException("url-service: Invalid Service Url");
+		}
+		return location.get();
 	}
 	
 	private String generateUrl(String shortUrl) {

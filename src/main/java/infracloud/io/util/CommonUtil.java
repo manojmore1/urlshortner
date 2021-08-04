@@ -26,7 +26,7 @@ public class CommonUtil {
 		java.util.regex.Pattern urlPattern = java.util.regex.Pattern.compile(URL_PATTERN);
 		Matcher urlMatcher = urlPattern.matcher(url);
 		if(!urlMatcher.find()) {
-			throw new IllegalArgumentException();
+			throw new IllegalArgumentException("Invalid URL");
 		}
 		return true;
 	}
