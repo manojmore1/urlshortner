@@ -38,7 +38,10 @@ public class UrlController {
 		LOGGER.info("url-service: shortning of url");
 		LOGGER.debug("url-service: shortning of url:{}", url);
 		
-		return urlService.getShortenUrl(url);
+		String shortUrl = urlService.getShortenUrl(url);
+		
+		LOGGER.info("url-service: URL shortned:{}", shortUrl);
+		return shortUrl;
 	}
 
 	@GetMapping(value = "/{url}")

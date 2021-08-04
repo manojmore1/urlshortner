@@ -21,8 +21,8 @@ public class UrlServiceImpl implements UrlService {
 	public static final Logger LOGGER = LoggerFactory.getLogger(UrlServiceImpl.class);
 
 	Set<String> duplicateCheckSet = new HashSet<String>();
-	Map<String, String> tinyToUrl = new HashMap<String, String>();
-	Map<String, String> urlToTiny = new HashMap<String, String>();
+	Map<String, String> shorturl_url = new HashMap<String, String>();
+	Map<String, String> url_shorturl = new HashMap<String, String>();
 
 	@Autowired
 	CommonUtil commonUtil;
@@ -35,21 +35,21 @@ public class UrlServiceImpl implements UrlService {
 		if (duplicateCheckSet.add(url)) {
 			LOGGER.debug("url-service: started shortning of url");
 			String shortUrl = commonUtil.generateAlphaNumericTokenOfSize(4);
-			tinyToUrl.put(shortUrl, url);
-			urlToTiny.put(url, shortUrl);
+			shorturl_url.put(shortUrl, url);
+			url_shorturl.put(url, shortUrl);
 			LOGGER.debug("url-service: shortUrl generated:{}", shortUrl);
 			return generateUrl(shortUrl);
 		}
 		
 		LOGGER.info("url-service: shortUrl is alrady generated");
-		String shortUrl = urlToTiny.get(url);
+		String shortUrl = url_shorturl.get(url);
 		LOGGER.debug("url-service: existing shortUrl:{}", shortUrl);
 		return generateUrl(shortUrl);
 	}
 
 	@Override
 	public String serviceUrl(String url) {
-		Optional<String> location = Optional.ofNullable(tinyToUrl.get(url));
+		Optional<String> location = Optional.ofNullable(shorturl_url.get(url));
 		LOGGER.info("url-service: serving shortUrl:{} with {}",url,location.get());
 		
 		if(!location.isPresent()) {
