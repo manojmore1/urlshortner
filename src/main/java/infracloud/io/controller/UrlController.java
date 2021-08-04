@@ -45,7 +45,7 @@ public class UrlController {
 	}
 
 	@GetMapping(value = "/{url}")
-	public void serviceUrl(@PathVariable("url") String url, HttpServletResponse httpServletResponse) {
+	public void locateUrl(@PathVariable("url") String url, HttpServletResponse httpServletResponse) {
 		LOGGER.info("url-service: short url invoked");
 		LOGGER.debug("url-service: short url invoked:{}", url);
 
