@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>infracloud.io</groupId>
 	<artifactId>url-service</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1-${buildno}-SNAPSHOT</version>
 	<description>shortning of url</description>
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-web -->
